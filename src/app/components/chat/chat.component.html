@@ -1,0 +1,10 @@
+<p>Hi {{ username }}</p>
+<div class="cart-item" *ngFor="let message of messages">
+    <span>{{ message.user }} : {{message.message}}</span>
+</div>
+<div>
+    <input [formControl]="messageControl" />
+</div>
+<div>
+    <button (click)="send()">Send</button>
+</div>
