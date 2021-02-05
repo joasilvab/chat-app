@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Message } from 'src/app/models/message';
 import { ChatService } from 'src/app/services/chat.service';
+import { PostService } from 'src/app/services/post.service';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   messageReceivedSubscription: Subscription;
 
   constructor(private userService: UserService,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private postService: PostService
   ) {
     this.username = userService.getUsername();
     this.messageReceivedSubscription = this.chatService.messageReceived.subscribe(
@@ -27,6 +29,9 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.postService.getPosts().subscribe(
+      response => { this.messages.push(...response) }
+    );
     this.chatService.messageReceived.subscribe();
   }
 
