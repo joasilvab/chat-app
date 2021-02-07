@@ -1,4 +1,6 @@
+import { User } from "./user";
+
 export class Message {
-    user: string = '';
+    user: User = new User();
     message: string = '';
 }

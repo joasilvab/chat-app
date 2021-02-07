@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Message } from 'src/app/models/message';
+import { User } from 'src/app/models/user';
 import { ChatService } from 'src/app/services/chat.service';
 import { PostService } from 'src/app/services/post.service';
 import { UserService } from '../../services/user.service';
@@ -13,7 +14,7 @@ import { UserService } from '../../services/user.service';
 })
 export class ChatComponent implements OnInit, OnDestroy {
 
-  username: string;
+  user: User = new User();
   messages: Message[] = [];
   messageControl = new FormControl();
   messageReceivedSubscription: Subscription;
@@ -22,7 +23,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     private chatService: ChatService,
     private postService: PostService
   ) {
-    this.username = userService.getUsername();
+    this.user = userService.getUser();
     this.messageReceivedSubscription = this.chatService.messageReceived.subscribe(
       next => this.messages.push(next)
     );
@@ -37,7 +38,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   send() {
     var message = new Message();
-    message = { message: this.messageControl.value, user: this.userService.getUsername() };
+    message = { message: this.messageControl.value, user: this.userService.getUser() };
     this.chatService.sendMessage(message);
   }
 

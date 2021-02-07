@@ -1,6 +1,6 @@
-<p>Hi {{ username }}</p>
+<p>Hi {{ user.username }}</p>
 <div class="cart-item" *ngFor="let message of messages">
-    <span>{{ message.user }} : {{message.message}}</span>
+    <span>{{ message.user.username }} : {{message.message}}</span>
 </div>
 <div>
     <input [formControl]="messageControl" />
