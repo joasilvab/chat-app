@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Message } from 'src/app/models/message';
+import { BotService } from 'src/app/services/bot.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { PostService } from 'src/app/services/post.service';
 
@@ -21,7 +22,8 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService,
     private chatService: ChatService,
-    private postService: PostService
+    private postService: PostService,
+    private botService: BotService
   ) {
     this.username = authService.getClaims().username;
     this.messageReceivedSubscription = this.chatService.messageReceived.subscribe(
@@ -31,7 +33,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.postService.getPosts().subscribe(
-      response => { 
+      response => {
         this.messages.push(...response);
         this.loadingMessages = false;
       }
@@ -40,9 +42,23 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   send() {
-    var message = new Message();
-    message = { message: this.messageControl.value, username: this.username };
-    this.chatService.sendMessage(message);
+    var enteredMessage: string = this.messageControl.value;
+    if (enteredMessage[0] == '/') {
+      var indexOfEqualSign = enteredMessage.indexOf("=");
+      if (indexOfEqualSign == -1) {
+        alert("The parameter is missing. The command must follow this template: /[command]=[parameter]");
+      } else {
+        var command = enteredMessage.slice(1, indexOfEqualSign);
+        var parameter = enteredMessage.slice(indexOfEqualSign + 1);
+
+        this.botService.sendCommand(command, parameter).subscribe();
+      }
+    }
+    else {
+      var message = new Message();
+      message = { message: this.messageControl.value, username: this.username };
+      this.chatService.sendMessage(message);
+    }
   }
 
   ngOnDestroy() {

@@ -7,20 +7,20 @@
         <div class="row" *ngFor="let message of messages">
             <div class="col-10">
                 <div *ngIf="message.username != username">
-                    <ngb-alert [dismissible]="false" type="success">
+                    <ngb-alert [dismissible]="false" [type]="message.username == 'Chatbot'?'warning':'success'">
                         <p class="m-0"><small><b>{{message.timestamp | date:'short' }}</b></small></p>
                         <span><b>{{ message.username }}</b> : {{message.message}}</span>
                     </ngb-alert>
                 </div>
                 <div *ngIf="message.username == username" class="float-right">
-                    <ngb-alert [dismissible]="false" type="success">
+                    <ngb-alert [dismissible]="false" type="primary">
                         <p class="m-0"><small><b>{{message.timestamp | date:'short' }}</b></small></p>
                         <span>{{message.message}}</span>
                     </ngb-alert>
                 </div>
             </div>
         </div>
-        <div class="row align-items-end bg-light" style="bottom: 0; position: fixed;">
+            <div class="row align-items-end bg-light">
             <div class="col-12 m-3">
                 <input [formControl]="messageControl" />
                 <button class="btn btn-primary" (click)="send()">Send</button>

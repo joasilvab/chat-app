@@ -30,6 +30,10 @@ export class AuthService {
     return this.manager.signinRedirect();
   }
 
+  signout(): Promise<void> {
+    return this.manager.signoutRedirect();
+  }
+
   completeAuthentication(): Promise<void> {
     return this.manager.signinRedirectCallback().then(user => {
       this.user = user;
@@ -46,6 +50,7 @@ export function getClientSettings(): UserManagerSettings {
     scope: "openid profile api1.read",
     filterProtocolClaims: true,
     loadUserInfo: true,
-    redirect_uri: 'http://localhost:4200/auth-callback'
+    redirect_uri: 'http://localhost:4200/auth-callback',
+    post_logout_redirect_uri: 'http://localhost:4200/'
   };
 }

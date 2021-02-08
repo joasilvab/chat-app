@@ -4,7 +4,7 @@
         <button *ngIf="!isAuthenticated" type="button" class="btn btn-primary" (click)="login()">Click here to login!</button>
         <div *ngIf="isAuthenticated">
             <span class="mr-3">Hi <b class="">{{ username }}</b>!</span>
-            <button type="button" class="btn btn-primary" (click)="login()">Log out</button>
+            <button type="button" class="btn btn-primary" (click)="logout()">Log out</button>
         </div>
     </div>
   </nav>
