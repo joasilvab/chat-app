@@ -1,0 +1,13 @@
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">Financial chatroom</span>
+        <button *ngIf="!isAuthenticated" type="button" class="btn btn-primary" (click)="login()">Click here to login!</button>
+        <div *ngIf="isAuthenticated">
+            <span class="mr-3">Hi <b class="">{{ username }}</b>!</span>
+            <button type="button" class="btn btn-primary" (click)="login()">Log out</button>
+        </div>
+    </div>
+  </nav>
+<div *ngIf="isAuthenticated">
+    <app-chat></app-chat>
+</div>

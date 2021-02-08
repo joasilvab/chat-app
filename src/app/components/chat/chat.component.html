@@ -1,10 +1,30 @@
-<p>Hi {{ user.username }}</p>
-<div class="cart-item" *ngFor="let message of messages">
-    <span>{{ message.user.username }} : {{message.message}}</span>
+<div *ngIf="loadingMessages">
+    Loading messages...
 </div>
-<div>
-    <input [formControl]="messageControl" />
-</div>
-<div>
-    <button (click)="send()">Send</button>
+
+<div *ngIf="!loadingMessages">
+    <div class="container mt-3">
+        <div class="row" *ngFor="let message of messages">
+            <div class="col-10">
+                <div *ngIf="message.username != username">
+                    <ngb-alert [dismissible]="false" type="success">
+                        <p class="m-0"><small><b>{{message.timestamp | date:'short' }}</b></small></p>
+                        <span><b>{{ message.username }}</b> : {{message.message}}</span>
+                    </ngb-alert>
+                </div>
+                <div *ngIf="message.username == username" class="float-right">
+                    <ngb-alert [dismissible]="false" type="success">
+                        <p class="m-0"><small><b>{{message.timestamp | date:'short' }}</b></small></p>
+                        <span>{{message.message}}</span>
+                    </ngb-alert>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-end bg-light" style="bottom: 0; position: fixed;">
+            <div class="col-12 m-3">
+                <input [formControl]="messageControl" />
+                <button class="btn btn-primary" (click)="send()">Send</button>
+            </div>
+        </div>
+    </div>
 </div>

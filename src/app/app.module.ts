@@ -8,21 +8,23 @@ import { AppComponent } from './app.component';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { AuthService } from './auth/auth.service';
 import { ChatComponent } from './components/chat/chat.component';
-import { LoginComponent } from './components/login/login.component';
 import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MainComponent } from './components/main/main.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChatComponent,
-    LoginComponent,
-    AuthCallbackComponent
+    AuthCallbackComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [AuthGuardService, AuthService],
   bootstrap: [AppComponent]

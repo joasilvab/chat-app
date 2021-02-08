@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Message } from 'src/app/models/message';
-import { User } from 'src/app/models/user';
 import { ChatService } from 'src/app/services/chat.service';
 import { PostService } from 'src/app/services/post.service';
-import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-chat',
@@ -14,16 +13,17 @@ import { UserService } from '../../services/user.service';
 })
 export class ChatComponent implements OnInit, OnDestroy {
 
-  user: User = new User();
+  loadingMessages: boolean = true;
+  username: string = '';
   messages: Message[] = [];
   messageControl = new FormControl();
   messageReceivedSubscription: Subscription;
 
-  constructor(private userService: UserService,
+  constructor(private authService: AuthService,
     private chatService: ChatService,
     private postService: PostService
   ) {
-    this.user = userService.getUser();
+    this.username = authService.getClaims().username;
     this.messageReceivedSubscription = this.chatService.messageReceived.subscribe(
       next => this.messages.push(next)
     );
@@ -31,14 +31,17 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.postService.getPosts().subscribe(
-      response => { this.messages.push(...response) }
+      response => { 
+        this.messages.push(...response);
+        this.loadingMessages = false;
+      }
     );
     this.chatService.messageReceived.subscribe();
   }
 
   send() {
     var message = new Message();
-    message = { message: this.messageControl.value, user: this.userService.getUser() };
+    message = { message: this.messageControl.value, username: this.username };
     this.chatService.sendMessage(message);
   }
 
