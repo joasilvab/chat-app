@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { UserManager, UserManagerSettings, User } from 'oidc-client';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AuthService {
@@ -43,7 +44,7 @@ export class AuthService {
 
 export function getClientSettings(): UserManagerSettings {
   return {
-    authority: 'https://localhost:44325/',
+    authority: environment.identityUrl,
     client_id: 'oauthClient',
     client_secret: 'ChatSecret',
     response_type: "code",

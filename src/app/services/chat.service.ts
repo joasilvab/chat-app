@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+import { environment } from 'src/environments/environment';
 import { Message } from '../models/message';
 
 @Injectable({
@@ -15,7 +16,7 @@ export class ChatService {
 
   constructor() {
     this._hubConnection = new HubConnectionBuilder()
-      .withUrl("https://localhost:44389/chathub")
+      .withUrl(environment.chatApiUrl + "/chathub")
       .build();
     this.registerOnServerEvents();
     this.startConnection();

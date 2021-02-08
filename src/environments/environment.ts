@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  chatApiUrl: 'https://localhost:44389',
+  botApiUrl: 'https://localhost:44356',
+  identityUrl: 'https://localhost:44325/'
 };
 
 /*
