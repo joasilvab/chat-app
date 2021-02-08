@@ -45,7 +45,7 @@ export function getClientSettings(): UserManagerSettings {
   return {
     authority: 'https://localhost:44325/',
     client_id: 'oauthClient',
-    client_secret: 'SuperSecretPassword',
+    client_secret: 'ChatSecret',
     response_type: "code",
     scope: "openid profile api1.read",
     filterProtocolClaims: true,

@@ -38,7 +38,6 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.loadingMessages = false;
       }
     );
-    this.chatService.messageReceived.subscribe();
   }
 
   send() {
