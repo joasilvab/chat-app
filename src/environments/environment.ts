@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  chatApiUrl: 'https://localhost:44389',
-  botApiUrl: 'https://localhost:44356',
-  identityUrl: 'https://localhost:44325/'
+  chatApiUrl: 'https://localhost:5021',
+  botApiUrl: 'https://localhost:5011',
+  identityUrl: 'https://localhost:5001/'
 };
 
 /*
